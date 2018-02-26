@@ -1,0 +1,24 @@
+{
+  "name": "sitemon",
+  "version": "1.0.0",
+  "description": "SiteMon is a Google Chrome plugin that monitors user behavior in web surfing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-build": "tsc -p ./tsconfig.json --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zicodeng/sitemon.git"
+  },
+  "author": "Zico Deng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zicodeng/sitemon/issues"
+  },
+  "homepage": "https://github.com/zicodeng/sitemon#readme",
+  "devDependencies": {
+    "@types/chrome": "0.0.59",
+    "typescript": "^2.7.2"
+  }
+}
