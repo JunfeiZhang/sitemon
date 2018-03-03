@@ -4,8 +4,8 @@ SiteMon is a Google Chrome extension that monitors user behavior in web surfing.
 
 ## Features
 
-* Tracks what websites the user has visited.
-* Tracks how much time the user has spent on any particular website.
+*   Tracks what websites the user has visited.
+*   Tracks how much time the user has spent on any particular website.
 
 ## References
 
@@ -17,6 +17,10 @@ Install all dependencies.
 
     npm run install
 
-Run TypeScript compiler.
+Run webpack (development).
 
     npm run watch-build
+
+Run webpack (production).
+
+    npm run build

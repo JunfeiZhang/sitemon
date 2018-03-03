@@ -14,5 +14,9 @@
         "default_icon": "icon.png"
     },
     "options_page": "options.html",
-    "permissions": ["storage", "notifications"]
+    "background": {
+        "scripts": ["background.min.js"],
+        "persistent": true
+    },
+    "permissions": ["storage", "notifications", "tabs"]
 }
