@@ -13,7 +13,7 @@ main {
     overflow-y: scroll;
 }
 
-.site-title {
+.title {
     text-align: center;
     background-color: #2979ff;
     color: white;
@@ -21,7 +21,11 @@ main {
     padding: 15px 0;
 }
 
-header {
+.title h1 {
+    margin: 0;
+}
+
+.summary {
     display: flex;
     justify-content: space-between;
     padding: 0 30px;
