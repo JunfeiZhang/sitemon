@@ -26,7 +26,7 @@ function sendSaveTimerMessage(): void {
 }
 
 function display(sitemon: any): void {
-    const date = moment().format('L');
+    const date = moment().format('LL');
     const list = sitemon[date];
     const sortedList = list
         ? Object.keys(list).sort(function(a, b) {

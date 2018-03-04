@@ -84,7 +84,7 @@ async function save(): Promise<void> {
         timer = 0;
         return;
     }
-    const date = moment().format('L');
+    const date = moment().format('LL');
     const sitemon = await chromep.storage.sync.get();
 
     sitemon[date] = sitemon[date] || {};
