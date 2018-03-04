@@ -1,5 +1,5 @@
 import ChromePromise from 'chrome-promise';
-import { formatDuration } from 'utils';
+import { formatTotalTime } from 'utils';
 import * as $ from 'jquery';
 import * as echarts from 'echarts';
 import * as moment from 'moment';
@@ -54,11 +54,11 @@ function createGraphReport(sitemon: any, date: string): void {
     const seriesItems: SeriesItem[] = [];
 
     Object.keys(list).forEach(hostname => {
-        const duration = list[hostname];
+        const totalTime = list[hostname];
         legendItems.push(hostname);
         seriesItems.push({
             name: hostname,
-            value: duration
+            value: totalTime
         });
     });
 
@@ -85,7 +85,7 @@ function createChartOption(
             formatter: (params: any) => {
                 const hostname = params.data.name;
                 const totalTime = params.data.value;
-                return `${hostname}<br>${formatDuration(totalTime)}`;
+                return `${hostname}<br>${formatTotalTime(totalTime)}`;
             }
         },
         legend: {

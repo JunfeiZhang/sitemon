@@ -1,6 +1,6 @@
 import ChromePromise from 'chrome-promise';
 import { Message, MessageAction } from 'message';
-import { formatDuration } from 'utils';
+import { formatTotalTime } from 'utils';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 
@@ -48,7 +48,7 @@ function displaySiteDetails(list: any, sortedList: string[]): void {
     const $siteDetails = $('#site-details');
     for (let i = 0; i < sortedList.length; i++) {
         const item = sortedList[i];
-        const duration = formatDuration(list[item]);
+        const totalTime = formatTotalTime(list[item]);
         const li = $('<li/>').appendTo($siteDetails);
         $('<h2/>')
             .addClass('rank')
@@ -69,8 +69,8 @@ function displaySiteDetails(list: any, sortedList: string[]): void {
             .appendTo(content);
 
         $('<p/>')
-            .addClass('duration')
-            .text(duration)
+            .addClass('total-time')
+            .text(totalTime)
             .appendTo(content);
     }
 }

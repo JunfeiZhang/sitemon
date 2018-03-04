@@ -89,10 +89,10 @@ async function save(): Promise<void> {
 
     sitemon[date] = sitemon[date] || {};
 
-    let newDuration = sitemon[date][currentHostname] || 0;
-    newDuration += timer;
+    let newTotalTime = sitemon[date][currentHostname] || 0;
+    newTotalTime += timer;
 
-    sitemon[date][currentHostname] = newDuration;
+    sitemon[date][currentHostname] = newTotalTime;
 
     await chromep.storage.sync.set(sitemon);
     // Reset timer for every successful save.

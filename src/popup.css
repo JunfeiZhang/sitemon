@@ -54,7 +54,7 @@ main {
 
 .rank,
 .hostname,
-.duration {
+.total-time {
     margin: 0;
 }
 
