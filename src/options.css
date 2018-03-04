@@ -1,27 +1,66 @@
 html,
 body {
+    min-height: 100vh;
     margin: 0;
     padding: 0;
 }
 
 main {
+    height: calc(100vh - 60px);
     display: flex;
     justify-content: center;
+}
+
+header {
+    height: 60px;
+    background-color: #2979ff;
+    display: flex;
     align-items: center;
-    padding-top: 100px;
+    padding-left: 20px;
 }
 
 .title {
-    background-color: #2979ff;
     color: white;
-    padding: 20px;
 }
 
 .title h1 {
     margin: 0;
 }
 
+aside {
+    min-width: 260px;
+    border-right: 1px solid #d8d2db;
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    text-align: center;
+}
+
+#dates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+#dates li {
+    padding: 20px;
+    border-bottom: 1px solid #d8d2db;
+    border-left: 5px solid white;
+}
+
+#dates li:first-child {
+    border-top: 1px solid #d8d2db;
+}
+
+#dates li.active,
+#dates li:hover {
+    border-left-color: #ff1744;
+}
+
 #report {
     width: 100%;
     height: 600px;
+    margin-top: 50px;
 }
