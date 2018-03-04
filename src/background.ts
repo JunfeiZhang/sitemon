@@ -19,6 +19,7 @@ let currentHostname: string;
         currentHostname = extractHostname(url);
 
         listenToTabStatusChange();
+        listenToRuntimeMessages();
     } catch (error) {
         console.error(error);
     }
@@ -81,34 +82,34 @@ function extractHostname(url: string): string {
 
 async function save(): Promise<void> {
     console.log('SAVING...');
-    const now = moment().format('L');
+    const date = moment().format('L');
     const sitemon = await chromep.storage.sync.get();
 
-    sitemon[now] = sitemon[now] || {};
+    sitemon[date] = sitemon[date] || {};
 
-    let newTime = sitemon[now][currentHostname] || 0;
-    newTime += timer;
+    let newDuration = sitemon[date][currentHostname] || 0;
+    newDuration += timer;
 
-    sitemon[now][currentHostname] = newTime;
+    sitemon[date][currentHostname] = newDuration;
 
     await chromep.storage.sync.set(sitemon);
     console.log('SAVED HOSTNAME', currentHostname);
     console.log(sitemon);
+    // Reset timer for every successful save.
+    timer = 0;
 }
 
 function afterSave(hostname: string): void {
-    timer = 0;
     currentHostname = hostname;
 }
 
-chrome.runtime.onMessage.addListener((message: Message) => {
-    if (message.action === MessageAction.GET_TIMER) {
-        // Send timer to popup to display.
-        chrome.runtime.sendMessage({
-            action: MessageAction.UPDATE_TIMER,
-            payload: {
-                timer: timer
-            }
-        });
-    }
-});
+function listenToRuntimeMessages(): void {
+    chrome.runtime.onMessage.addListener(async (message: Message) => {
+        if (message.action === MessageAction.SAVE_TIMER) {
+            await save();
+            chrome.runtime.sendMessage({
+                action: MessageAction.TIMER_SAVED
+            });
+        }
+    });
+}

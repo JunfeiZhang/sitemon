@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    color: #2c3443;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+main {
+    min-width: 400px;
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.site-title {
+    text-align: center;
+    background-color: #2979ff;
+    color: white;
+    margin: 0;
+    padding: 15px 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+#site-details {
+    list-style: none;
+    padding: 0 30px;
+    margin: 0;
+}
+
+#site-details li {
+    height: 70px;
+    position: relative;
+    border-top: 1px solid #d8d2db;
+    display: flex;
+    align-items: center;
+}
+
+.vertical-divider {
+    width: 1px;
+    height: 50%;
+    background-color: #d8d2db;
+    margin: 0 20px;
+}
+
+.rank,
+.hostname,
+.duration {
+    margin: 0;
+}
+
+.rank {
+    color: #ff1744;
+}
+
+.hostname {
+    margin-bottom: 5px;
+    color: #00e676;
+}
