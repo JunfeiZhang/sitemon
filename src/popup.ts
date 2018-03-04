@@ -1,5 +1,6 @@
 import ChromePromise from 'chrome-promise';
 import { Message, MessageAction } from 'message';
+import { formatDuration } from 'utils';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 
@@ -72,12 +73,4 @@ function displaySiteDetails(list: any, sortedList: string[]): void {
             .text(duration)
             .appendTo(content);
     }
-}
-
-function formatDuration(duration: number): string {
-    const hours = Math.floor(duration / 3600);
-    duration = duration % 3600;
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${hours}H ${minutes}M ${seconds}S`;
 }
