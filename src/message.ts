@@ -4,5 +4,6 @@ export interface Message {
 }
 
 export enum MessageAction {
-    UPDATE_TIMER = 'UpdateTimer'
+    UPDATE_TIMER = 'UpdateTimer',
+    GET_TIMER = 'GetTimer'
 }
