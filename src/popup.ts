@@ -13,7 +13,6 @@ const chromep = new ChromePromise();
 function listenToRuntimeMessages(): void {
     chrome.runtime.onMessage.addListener(async (message: Message) => {
         if (message.action === MessageAction.TIMER_SAVED) {
-            console.log('TIMER SAVED...');
             const sitemon = await chromep.storage.sync.get();
             display(sitemon);
         }
@@ -21,7 +20,6 @@ function listenToRuntimeMessages(): void {
 }
 
 function sendSaveTimerMessage(): void {
-    console.log('SEND SAVE TIMER REQUEST...');
     chrome.runtime.sendMessage({
         action: MessageAction.SAVE_TIMER
     });
@@ -30,18 +28,19 @@ function sendSaveTimerMessage(): void {
 function display(sitemon: any): void {
     const date = moment().format('L');
     const list = sitemon[date];
-    const sortedList = Object.keys(list).sort(function(a, b) {
-        return list[b] - list[a];
-    });
-
-    displayHeader(sortedList);
+    const sortedList = list
+        ? Object.keys(list).sort(function(a, b) {
+              return list[b] - list[a];
+          })
+        : [];
+    displayHeader(sortedList.length);
     displaySiteDetails(list, sortedList);
 }
 
-function displayHeader(sortedList: string[]): void {
+function displayHeader(total: number): void {
     const date = moment().format('LL');
     $('#date').text(date);
-    $('#total').text(sortedList.length);
+    $('#total').text(total);
 }
 
 function displaySiteDetails(list: any, sortedList: string[]): void {

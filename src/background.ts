@@ -27,7 +27,6 @@ let currentHostname: string;
 
 function listenToTabStatusChange() {
     chrome.tabs.onActivated.addListener(async (): Promise<void> => {
-        console.log('ACTIVE TAB CHANGED...');
         const url = await getActiveTabURL();
         if (!url) return;
         const hostname = extractHostname(url);
@@ -59,7 +58,6 @@ function listenToTabStatusChange() {
                 if (!url) return;
                 const hostname = extractHostname(url);
                 if (hostname === currentHostname) return;
-                console.log('TAB UPDATED...');
                 await save();
                 afterSave(hostname);
             }
@@ -81,7 +79,11 @@ function extractHostname(url: string): string {
 }
 
 async function save(): Promise<void> {
-    console.log('SAVING...');
+    // Filter invalid hostnames such as newtab, extensions.
+    if (currentHostname.indexOf('.') === -1) {
+        timer = 0;
+        return;
+    }
     const date = moment().format('L');
     const sitemon = await chromep.storage.sync.get();
 
@@ -93,8 +95,6 @@ async function save(): Promise<void> {
     sitemon[date][currentHostname] = newDuration;
 
     await chromep.storage.sync.set(sitemon);
-    console.log('SAVED HOSTNAME', currentHostname);
-    console.log(sitemon);
     // Reset timer for every successful save.
     timer = 0;
 }
