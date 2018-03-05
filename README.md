@@ -13,14 +13,26 @@ Icon: http://www.clker.com/clipart-292648.html
 
 # Development
 
+## Installation and Run
+
 Install all dependencies.
 
     npm run install
 
-Run webpack (development).
+Run webpack in development mode.
 
     npm run watch-build
 
-Run webpack (production).
+Run webpack in production mode.
 
     npm run build
+
+## Debug and Test
+
+Go to **chrome://extensions/**
+
+Click **Load unpacked extension...** button.
+
+Find **sitemon** directory in your computer.
+
+Select and load **dist** directory (make sure you have run webpack).
