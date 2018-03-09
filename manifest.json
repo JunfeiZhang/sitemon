@@ -18,5 +18,5 @@
         "scripts": ["background.min.js"],
         "persistent": true
     },
-    "permissions": ["storage", "notifications", "tabs"]
+    "permissions": ["storage", "notifications", "tabs", "idle"]
 }

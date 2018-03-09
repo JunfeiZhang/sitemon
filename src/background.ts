@@ -6,7 +6,7 @@ const chromep = new ChromePromise();
 
 // A global Timer that tracks how long the current tab has been active (in seconds).
 let timer = 0;
-setInterval(() => {
+let intervalId:NodeJS.Timer|null = setInterval(() => {
     timer++;
 }, 1000);
 
@@ -20,10 +20,26 @@ let currentHostname: string;
 
         listenToTabStatusChange();
         listenToRuntimeMessages();
+        listenToIdleTimer();
     } catch (error) {
         console.error(error);
     }
 })();
+
+function listenToIdleTimer(){
+    chrome.idle.setDetectionInterval(15);
+
+    chrome.idle.onStateChanged.addListener((newState) => {
+        if (newState != 'active' && intervalId){
+            clearInterval(intervalId);
+            intervalId = null;
+        } else {
+            intervalId = setInterval(() => {
+                timer++;
+            }, 1000);
+        }
+    });
+}
 
 function listenToTabStatusChange() {
     chrome.tabs.onActivated.addListener(async (): Promise<void> => {
