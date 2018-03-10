@@ -6,14 +6,12 @@ const chromep = new ChromePromise();
 
 // A global Timer that tracks how long the current tab has been active (in seconds).
 let timer = 0;
-let intervalId:NodeJS.Timer|null = setInterval(() => {
-    timer++;
-}, 1000);
-
+let timerId: NodeJS.Timer | null = null;
 let currentHostname: string;
 
 (async () => {
     try {
+        startTimer();
         const url = await getActiveTabURL();
         if (!url) return;
         currentHostname = extractHostname(url);
@@ -26,17 +24,21 @@ let currentHostname: string;
     }
 })();
 
-function listenToIdleTimer(){
-    chrome.idle.setDetectionInterval(15);
+function startTimer() {
+    timerId = setInterval(() => {
+        timer++;
+    }, 1000);
+}
 
-    chrome.idle.onStateChanged.addListener((newState) => {
-        if (newState != 'active' && intervalId){
-            clearInterval(intervalId);
-            intervalId = null;
+function listenToIdleTimer() {
+    chrome.idle.setDetectionInterval(15); //second
+
+    chrome.idle.onStateChanged.addListener((newState: string) => {
+        if (newState != 'active' && timerId) {
+            clearInterval(timerId);
+            timerId = null;
         } else {
-            intervalId = setInterval(() => {
-                timer++;
-            }, 1000);
+            startTimer();
         }
     });
 }
