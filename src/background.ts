@@ -6,24 +6,42 @@ const chromep = new ChromePromise();
 
 // A global Timer that tracks how long the current tab has been active (in seconds).
 let timer = 0;
-setInterval(() => {
-    timer++;
-}, 1000);
-
+let timerId: NodeJS.Timer | null = null;
 let currentHostname: string;
 
 (async () => {
     try {
+        startTimer();
         const url = await getActiveTabURL();
         if (!url) return;
         currentHostname = extractHostname(url);
 
         listenToTabStatusChange();
         listenToRuntimeMessages();
+        listenToIdleTimer();
     } catch (error) {
         console.error(error);
     }
 })();
+
+function startTimer() {
+    timerId = setInterval(() => {
+        timer++;
+    }, 1000);
+}
+
+function listenToIdleTimer() {
+    chrome.idle.setDetectionInterval(15); //second
+
+    chrome.idle.onStateChanged.addListener((newState: string) => {
+        if (newState != 'active' && timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        } else {
+            startTimer();
+        }
+    });
+}
 
 function listenToTabStatusChange() {
     chrome.tabs.onActivated.addListener(async (): Promise<void> => {
@@ -38,9 +56,7 @@ function listenToTabStatusChange() {
     // For example: when you are listening to YouTube music on one tab
     // and reading a post on another tab, when YouTube plays next music,
     // the YouTube tab is still considered as updated.
-    chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab): Promise<
-        void
-    > => {
+    chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab): Promise<void> => {
         if (
             tabId &&
             changeInfo.status &&
@@ -57,7 +73,7 @@ function listenToTabStatusChange() {
                 const url = updatedTabs[0].url;
                 if (!url) return;
                 const hostname = extractHostname(url);
-                if (hostname === currentHostname) return;
+                if (hostname === currentHostname) return; // tab isn't changed
                 await save();
                 afterSave(hostname);
             }
@@ -78,6 +94,7 @@ function extractHostname(url: string): string {
     return new URL(url).hostname;
 }
 
+// update timer in chromePromise
 async function save(): Promise<void> {
     // Filter invalid hostnames such as newtab, extensions.
     if (currentHostname.indexOf('.') === -1) {

@@ -71,9 +71,7 @@ function createGraphReport(sitemon: any, date: string): void {
     createChart(option);
 }
 
-function createChartOption(
-    chartUpdateOption: ChartUpdateOption
-): echarts.EChartOption {
+function createChartOption(chartUpdateOption: ChartUpdateOption): echarts.EChartOption {
     const option: echarts.EChartOption = {
         title: {
             text: 'Total Time Spent on Different Websites',
