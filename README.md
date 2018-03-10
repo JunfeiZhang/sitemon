@@ -7,6 +7,16 @@ SiteMon is a Google Chrome extension that monitors user behavior in web surfing.
 *   Tracks what websites the user has visited.
 *   Tracks how much time the user has spent on any particular website.
 
+## Screenshots
+
+### Popup
+
+![Popup](https://raw.githubusercontent.com/zicodeng/sitemon/master/screenshots/popup.png)
+
+### Dashboard (Options Page)
+
+![Dashboard](https://raw.githubusercontent.com/zicodeng/sitemon/master/screenshots/dashboard.png)
+
 ## References
 
 Icon: http://www.clker.com/clipart-292648.html
